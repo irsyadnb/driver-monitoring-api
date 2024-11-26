@@ -4,5 +4,9 @@ config()
 export const {
   API_PORT,
   SOCKET_PORT,
-  VERSION
+  VERSION,
+  DB_HOST,
+  DB_USER,
+  DB_PASSWORD,
+  DB_NAME,
 } = process.env

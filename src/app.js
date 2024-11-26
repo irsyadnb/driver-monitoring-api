@@ -29,7 +29,10 @@ export class App {
     this.app.use(express.urlencoded({extended: true}))
   }
   #initializeRoutes() {
-    // Initialize REST routes
+    this.app.get("/", (req, res) => {
+      res.send("Welcome to the API!");
+    });
+    
     const appRouter = new AppRouter()
     this.app.use(`/api/${VERSION}`, appRouter.getRouter())
 
