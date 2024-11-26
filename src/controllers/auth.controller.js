@@ -5,14 +5,14 @@ import { JWTUtil } from "../utils/jwt.util.js";
 export const AuthController = {
   async register(req, res) {
     try {
-      const { name, email, password } = req.body;
+      const { name, age, email, password } = req.body;
 
       const existingUser = await UserModel.findByEmail(email);
       if (existingUser) return res.status(400).json({ message: "Email already exists" });
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const newUser = await UserModel.createUser(name, email, hashedPassword);
+      const newUser = await UserModel.createUser(name, age, email, hashedPassword);
 
       return res.status(201).json({ message: "User registered successfully", user: newUser });
     } catch (error) {
