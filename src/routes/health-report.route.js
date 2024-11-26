@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { HealthReportController } from "../controllers/health-report.controller.js";
+import { AuthMiddleware } from "../middlewares/auth.middleware.js";
 
 export class HealthReportRoute {
   constructor() {
@@ -8,8 +9,8 @@ export class HealthReportRoute {
   }
 
   #initializeRoutes() {
-    this.router.post("/", HealthReportController.createHealthReport);
-    this.router.get("/", HealthReportController.getAllHealthReports);
-    this.router.get("/:id", HealthReportController.getHealthReportById);
+    this.router.post("/", AuthMiddleware.verifyToken, HealthReportController.createHealthReport);
+    this.router.get("/", AuthMiddleware.verifyToken, HealthReportController.getAllHealthReports);
+    this.router.get("/:id", AuthMiddleware.verifyToken, HealthReportController.getHealthReportById);
   }
 }

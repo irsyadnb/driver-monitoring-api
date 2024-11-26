@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { TripController } from "../controllers/trip.controller.js";
+import { AuthMiddleware } from "../middlewares/auth.middleware.js";
 
 export class TripRoute {
   constructor() {
@@ -8,8 +9,8 @@ export class TripRoute {
   }
 
   #initializeRoutes() {
-    this.router.post("/", TripController.createTrip);  
-    this.router.get("/", TripController.getAllTrips); 
-    this.router.get("/:id", TripController.getTripById);
+    this.router.post("/", AuthMiddleware.verifyToken, TripController.createTrip);  
+    this.router.get("/", AuthMiddleware.verifyToken, TripController.getAllTrips); 
+    this.router.get("/:id", AuthMiddleware.verifyToken, TripController.getTripById);
   }
 }
