@@ -13,7 +13,6 @@ export class AuthRoute {
     this.router.post("/login", AuthController.login);
 
     this.router.post("/logout", (req, res) => {});
-
     this.router.post("/refresh-token", (req, res) => {});
 
     //testing

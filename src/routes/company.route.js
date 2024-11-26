@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { CompanyController } from "../controllers/company.controller.js";
+import { AuthMiddleware } from "../middlewares/auth.middleware.js";
 
 export class CompanyRoute {
   constructor() {
@@ -8,8 +9,8 @@ export class CompanyRoute {
   }
 
   #initializeRoutes() {
-    this.router.post("/", CompanyController.createCompany); 
-    this.router.get("/", CompanyController.getAllCompanies);
-    this.router.get("/:id", CompanyController.getCompanyById);
+    this.router.post("/", AuthMiddleware.verifyToken, CompanyController.createCompany); 
+    this.router.get("/", AuthMiddleware.verifyToken, CompanyController.getAllCompanies);
+    this.router.get("/:id", AuthMiddleware.verifyToken, CompanyController.getCompanyById);
   }
 }
