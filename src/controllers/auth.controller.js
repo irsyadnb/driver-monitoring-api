@@ -17,7 +17,7 @@ export const AuthController = {
       return res.status(201).json({ message: "User registered successfully", user: newUser });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ error: "Internal server error" });
     }
   },
 
@@ -26,17 +26,17 @@ export const AuthController = {
       const { email, password } = req.body;
 
       const user = await UserModel.findByEmail(email);
-      if (!user) return res.status(404).json({ message: "User not found" });
+      if (!user) return res.status(404).json({ error: "User not found" });
 
       const isValid = await bcrypt.compare(password, user.password);
-      if (!isValid) return res.status(401).json({ message: "Invalid credentials" });
+      if (!isValid) return res.status(401).json({ error: "Invalid credentials" });
 
       const token = JWTUtil.generateToken({ id: user.id, email: user.email });
 
-      return res.status(200).json({ message: "Login successful", token });
+      return res.status(200).json({ message: "Login successful", data: { token } });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ error: "Internal server error" });
     }
   },
 
@@ -50,7 +50,7 @@ export const AuthController = {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   }
 };
