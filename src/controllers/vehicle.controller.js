@@ -9,11 +9,11 @@ export const VehicleController = {
 
       return res.status(201).json({
         message: "Vehicle created successfully",
-        vehicle: newVehicle
+        data: newVehicle
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   },
 
@@ -22,11 +22,11 @@ export const VehicleController = {
       const vehicles = await VehicleModel.getAllVehicles();
       return res.status(200).json({
         message: "Vehicles fetched successfully",
-        vehicles
+        data: vehicles
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   },
 
@@ -34,15 +34,15 @@ export const VehicleController = {
     try {
       const { id } = req.params;
       const vehicle = await VehicleModel.getVehicleById(id);
-      if (!vehicle) return res.status(404).json({ message: "Vehicle not found" });
+      if (!vehicle) return res.status(404).json({ error: "Vehicle not found" });
 
       return res.status(200).json({
         message: "Vehicle fetched successfully",
-        vehicle
+        data: vehicle
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   }
 };
