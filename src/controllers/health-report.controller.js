@@ -9,11 +9,11 @@ export const HealthReportController = {
 
       return res.status(201).json({
         message: "Health report created successfully",
-        healthReport: newHealthReport
+        data: newHealthReport
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   },
 
@@ -22,11 +22,11 @@ export const HealthReportController = {
       const healthReports = await HealthReportModel.getAllHealthReports();
       return res.status(200).json({
         message: "Health reports fetched successfully",
-        healthReports
+        data: healthReports
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   },
 
@@ -34,15 +34,15 @@ export const HealthReportController = {
     try {
       const { id } = req.params;
       const healthReport = await HealthReportModel.getHealthReportById(id);
-      if (!healthReport) return res.status(404).json({ message: "Health report not found" });
+      if (!healthReport) return res.status(404).json({ error: "Health report not found" });
 
       return res.status(200).json({
         message: "Health report fetched successfully",
-        healthReport
+        data: healthReport
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   }
 };

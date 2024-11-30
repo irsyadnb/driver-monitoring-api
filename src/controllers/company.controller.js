@@ -9,11 +9,11 @@ export const CompanyController = {
 
       return res.status(201).json({
         message: "Company created successfully",
-        company: newCompany
+        data: newCompany
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   },
 
@@ -22,11 +22,11 @@ export const CompanyController = {
       const companies = await CompanyModel.getAllCompanies();
       return res.status(200).json({
         message: "Companies fetched successfully",
-        companies
+        data: companies
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   },
 
@@ -34,15 +34,15 @@ export const CompanyController = {
     try {
       const { id } = req.params;
       const company = await CompanyModel.getCompanyById(id);
-      if (!company) return res.status(404).json({ message: "Company not found" });
+      if (!company) return res.status(404).json({ error: "Company not found" });
 
       return res.status(200).json({
         message: "Company fetched successfully",
-        company
+        data: company
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   }
 };
