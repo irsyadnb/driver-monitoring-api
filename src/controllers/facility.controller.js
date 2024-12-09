@@ -9,11 +9,11 @@ export const FacilityController = {
 
       return res.status(201).json({
         message: "Facility created successfully",
-        facility: newFacility
+        data: newFacility
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   },
 
@@ -22,11 +22,11 @@ export const FacilityController = {
       const facilities = await FacilityModel.getAllFacilities();
       return res.status(200).json({
         message: "Facilities fetched successfully",
-        facilities
+        data: facilities
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   },
 
@@ -34,15 +34,15 @@ export const FacilityController = {
     try {
       const { id } = req.params;
       const facility = await FacilityModel.getFacilityById(id);
-      if (!facility) return res.status(404).json({ message: "Facility not found" });
+      if (!facility) return res.status(404).json({ error: "Facility not found" });
 
       return res.status(200).json({
         message: "Facility fetched successfully",
-        facility
+        data: facility
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   }
 };

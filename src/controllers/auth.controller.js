@@ -8,7 +8,7 @@ export const AuthController = {
       const { name, age, email, password } = req.body;
 
       const existingUser = await UserModel.findByEmail(email);
-      if (existingUser) return res.status(400).json({ message: "Email already exists" });
+      if (existingUser) return res.status(400).json({ error: "Email already exists" });
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -33,7 +33,7 @@ export const AuthController = {
 
       const token = JWTUtil.generateToken({ id: user.id, email: user.email });
 
-      return res.status(200).json({ message: "Login successful", data: { token } });
+      return res.status(200).json({ message: "Login successful", data: { token, id: user.id, name: user.name } });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Internal server error" });
@@ -51,6 +51,29 @@ export const AuthController = {
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
+  async updateProfile(req, res) {
+    try {
+      const { id } = req.params; 
+      const { name, password } = req.body;
+
+      if (!name || !password) {
+        return res.status(400).json({ error: "Name and password are required" });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const updatedUser = await UserModel.updateUserProfile(id, name, hashedPassword);
+
+      return res.status(200).json({
+        message: "Profile updated successfully",
+        user: updatedUser,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal server error" });
     }
   }
 };
