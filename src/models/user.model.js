@@ -33,5 +33,17 @@ export const UserModel = {
     const query = "SELECT id, name, email, age FROM users;";
     const result = await client.query(query);
     return result.rows;
+  },
+
+  async updateUserProfile(userId, name, hashedPassword) {
+    const query = `
+      UPDATE users
+      SET name = $1, password = $2
+      WHERE id = $3
+      RETURNING id, name, email;
+    `;
+    const values = [name, hashedPassword, userId];
+    const result = await client.query(query, values);
+    return result.rows[0];
   }
 };
