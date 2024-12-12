@@ -3,9 +3,9 @@ import { HealthReportModel } from "../models/health-report.model.js";
 export const HealthReportController = {
   async createHealthReport(req, res) {
     try {
-      const { user_id, date, health_type } = req.body;
+      const { user_id, health_type } = req.body;
 
-      const newHealthReport = await HealthReportModel.createHealthReport(user_id, date, health_type);
+      const newHealthReport = await HealthReportModel.createHealthReport(user_id, health_type);
 
       return res.status(201).json({
         message: "Health report created successfully",
