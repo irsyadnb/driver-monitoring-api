@@ -10,7 +10,7 @@ export class TripRoute {
 
   #initializeRoutes() {
     this.router.post("/", AuthMiddleware.verifyToken, TripController.createTrip);  
-    this.router.get("/", AuthMiddleware.verifyToken, TripController.getAllTrips); 
+    this.router.get("/user/:id", AuthMiddleware.verifyToken, TripController.getAllTripsByUserId); 
     this.router.get("/:id", AuthMiddleware.verifyToken, TripController.getTripById);
     this.router.put("/:id", AuthMiddleware.verifyToken, TripController.updateTrip);
   }
