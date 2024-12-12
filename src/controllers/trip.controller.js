@@ -44,5 +44,24 @@ export const TripController = {
       console.error(error);
       return res.status(500).json({ error: "Internal server error" });
     }
-  }
+  },
+
+  async updateTrip(req, res) {
+    try {
+      const { id } = req.params; 
+      const { start_location, end_location, start_time, end_time, trip_status } = req.body;
+
+      const updatedTrip = await TripModel.updateTrip(id, start_location, end_location, start_time, end_time, trip_status);
+
+      if (!updatedTrip) return res.status(404).json({ error: "Trip not found" });
+
+      return res.status(200).json({
+        message: "Trip updated successfully",
+        data: updatedTrip,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
 };
