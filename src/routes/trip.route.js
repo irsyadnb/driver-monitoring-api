@@ -12,5 +12,6 @@ export class TripRoute {
     this.router.post("/", AuthMiddleware.verifyToken, TripController.createTrip);  
     this.router.get("/", AuthMiddleware.verifyToken, TripController.getAllTrips); 
     this.router.get("/:id", AuthMiddleware.verifyToken, TripController.getTripById);
+    this.router.put("/:id", AuthMiddleware.verifyToken, TripController.updateTrip);
   }
 }
