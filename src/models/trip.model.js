@@ -12,9 +12,9 @@ export const TripModel = {
     return result.rows[0];
   },
 
-  async getAllTrips() {
-    const query = "SELECT id, user_id, start_location, end_location, start_time, end_time, trip_status FROM trip;";
-    const result = await client.query(query);
+  async getAllTripsByUserId(user_id) {
+    const query = "SELECT id, user_id, start_location, end_location, start_time, end_time, trip_status FROM trip WHERE user_id = $1;;";
+    const result = await client.query(query, [user_id]);
     return result.rows;
   },
 

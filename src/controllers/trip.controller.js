@@ -17,9 +17,10 @@ export const TripController = {
     }
   },
 
-  async getAllTrips(req, res) {
+  async getAllTripsByUserId(req, res) {
     try {
-      const trips = await TripModel.getAllTrips();
+      const { id } = req.params;
+      const trips = await TripModel.getAllTripsByUserId(id);
       return res.status(200).json({
         message: "Trips fetched successfully",
         data: trips
