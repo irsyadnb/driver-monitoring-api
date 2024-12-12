@@ -3,9 +3,9 @@ import { TripModel } from "../models/trip.model.js";
 export const TripController = {
   async createTrip(req, res) {
     try {
-      const { user_id, start_location, end_location, start_time, end_time, trip_status } = req.body;
+      const { user_id, start_location, start_time } = req.body;
 
-      const newTrip = await TripModel.createTrip(user_id, start_location, end_location, start_time, end_time, trip_status);
+      const newTrip = await TripModel.createTrip(user_id, start_location, start_time);
 
       return res.status(201).json({
         message: "Trip created successfully",
@@ -49,9 +49,9 @@ export const TripController = {
   async updateTrip(req, res) {
     try {
       const { id } = req.params; 
-      const { start_location, end_location, start_time, end_time, trip_status } = req.body;
+      const { end_location, end_time } = req.body;
 
-      const updatedTrip = await TripModel.updateTrip(id, start_location, end_location, start_time, end_time, trip_status);
+      const updatedTrip = await TripModel.updateTrip(id, end_location, end_time);
 
       if (!updatedTrip) return res.status(404).json({ error: "Trip not found" });
 
