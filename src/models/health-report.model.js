@@ -12,9 +12,9 @@ export const HealthReportModel = {
     return result.rows[0];
   },
 
-  async getAllHealthReports() {
-    const query = "SELECT id, user_id, health_type, created_at FROM health_report;";
-    const result = await client.query(query);
+  async getAllHealthReports(user_id) {
+    const query = "SELECT id, user_id, health_type, created_at FROM health_report WHERE user_id = $1;";
+    const result = await client.query(query, [user_id]);
     return result.rows;
   },
 

@@ -19,7 +19,7 @@ export const HealthReportController = {
 
   async getAllHealthReports(req, res) {
     try {
-      const healthReports = await HealthReportModel.getAllHealthReports();
+      const healthReports = await HealthReportModel.getAllHealthReports(req.user.id);
       return res.status(200).json({
         message: "Health reports fetched successfully",
         data: healthReports
